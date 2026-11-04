@@ -1,5 +1,9 @@
 package com.daw.persistence.repositories;
 
-public class PedidoRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.daw.persistence.entities.PedidoEntity;
+
+public interface PedidoRepository extends JpaRepository<PedidoEntity, Long> {
 
 }
