@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.daw.persistence.entities.ClienteEntity;
 import com.daw.services.ClienteService;
-import com.daw.services.exceptions.clientes.ClienteException;
-import com.daw.services.exceptions.clientes.ClienteNotFoundException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -35,43 +33,25 @@ public class ClienteController {
 	// Obtener un cliente mediante su id
 	@GetMapping("/{id}")
 	public ResponseEntity<?> findById(@PathVariable long id) {
-		try {
-			return ResponseEntity.ok(this.clienteService.findById(id));
-		} catch (ClienteNotFoundException ae) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ae.getMessage());
-		}
+		return ResponseEntity.ok(this.clienteService.findById(id));
 	}
 
 	// Crear un cliente
 	@PostMapping
 	public ResponseEntity<?> create(@RequestBody ClienteEntity clienteEntity) {
-		try {
-			return ResponseEntity.status(HttpStatus.CREATED).body(this.clienteService.create(clienteEntity));
-		} catch (ClienteException ae) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ae.getMessage());
-		}
+		return ResponseEntity.status(HttpStatus.CREATED).body(this.clienteService.create(clienteEntity));
 	}
 
 	// Modificar un cliente
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@PathVariable long id, @RequestBody ClienteEntity clienteEntity) {
-		try {
-			return ResponseEntity.ok(this.clienteService.update(id, clienteEntity));
-		} catch (ClienteNotFoundException ae) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ae.getMessage());
-		} catch (ClienteException ae) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ae.getMessage());
-		}
+		return ResponseEntity.ok(this.clienteService.update(id, clienteEntity));
 	}
 
 	// Borrar un cliente
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable long id) {
-		try {
-			this.clienteService.delete(id);
-			return ResponseEntity.ok().build();
-		} catch (ClienteNotFoundException ae) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ae.getMessage());
-		}
+		this.clienteService.delete(id);
+		return ResponseEntity.ok().build();
 	}
 }

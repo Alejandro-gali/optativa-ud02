@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.daw.persistence.entities.PizzaEntity;
 import com.daw.services.PizzaService;
-import com.daw.services.exceptions.pizzas.PizzaException;
-import com.daw.services.exceptions.pizzas.PizzaNotFoundException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -35,43 +33,25 @@ public class PizzaController {
 	// Obtener una pizza mediante su id
 	@GetMapping("/{id}")
 	public ResponseEntity<?> findById(@PathVariable long id) {
-		try {
-			return ResponseEntity.ok(this.pizzaService.findById(id));
-		} catch (PizzaNotFoundException ae) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ae.getMessage());
-		}
+		return ResponseEntity.ok(this.pizzaService.findById(id));
 	}
 
 	// Crear una Pizza
 	@PostMapping
 	public ResponseEntity<?> create(@RequestBody PizzaEntity pizzaEntity) {
-		try {
-			return ResponseEntity.status(HttpStatus.CREATED).body(this.pizzaService.create(pizzaEntity));
-		} catch (PizzaException ae) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ae.getMessage());
-		}
+		return ResponseEntity.status(HttpStatus.CREATED).body(this.pizzaService.create(pizzaEntity));
 	}
 
 	// Modificar una pizza
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@PathVariable long id, @RequestBody PizzaEntity pizzaEntity) {
-		try {
-			return ResponseEntity.ok(this.pizzaService.update(id, pizzaEntity));
-		} catch (PizzaNotFoundException ae) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ae.getMessage());
-		} catch (PizzaException ae) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ae.getMessage());
-		}
+		return ResponseEntity.ok(this.pizzaService.update(id, pizzaEntity));
 	}
-	
+
 	// Borrar una Pizza
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> delete(@PathVariable long id){
-		try {
-			this.pizzaService.delete(id);
-			return ResponseEntity.ok().build();
-		} catch(PizzaNotFoundException ae) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ae.getMessage());
-		}
+	public ResponseEntity<?> delete(@PathVariable long id) {
+		this.pizzaService.delete(id);
+		return ResponseEntity.ok().build();
 	}
 }

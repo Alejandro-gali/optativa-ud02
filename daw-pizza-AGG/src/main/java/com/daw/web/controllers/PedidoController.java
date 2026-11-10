@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.daw.persistence.entities.PedidoEntity;
 import com.daw.services.PedidoService;
 import com.daw.services.dtos.PedidoDTO;
-import com.daw.services.exceptions.pedidos.PedidoException;
-import com.daw.services.exceptions.pedidos.PedidoNotFoundException;
 import com.daw.services.mappers.PedidoMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -37,46 +35,27 @@ public class PedidoController {
 	// Obtener un pedido mediante su id
 	@GetMapping("/{id}")
 	public ResponseEntity<?> findById(@PathVariable long id) {
-		try {
-			return ResponseEntity.ok(PedidoMapper.toDTO(this.pedidoService.findById(id)));
-		} catch (PedidoNotFoundException ae) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ae.getMessage());
-		}
+		return ResponseEntity.ok(PedidoMapper.toDTO(this.pedidoService.findById(id)));
 	}
 
 	// Crear un pedido
 	@PostMapping
 	public ResponseEntity<?> create(@RequestBody PedidoDTO pedidoDTO) {
-		try {
-			return ResponseEntity.status(HttpStatus.CREATED)
-					.body(PedidoMapper.toDTO(this.pedidoService.create(PedidoMapper.toEntity(pedidoDTO))));
-		} catch (PedidoException ae) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ae.getMessage());
-		}
+		return ResponseEntity.status(HttpStatus.CREATED)
+				.body(PedidoMapper.toDTO(this.pedidoService.create(PedidoMapper.toEntity(pedidoDTO))));
 	}
 
 	// Modificar un pedido
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@PathVariable long id, @RequestBody PedidoDTO pedidoDTO) {
-		try {
-			return ResponseEntity
-					.ok(PedidoMapper.toDTO(this.pedidoService.update(id, PedidoMapper.toEntity(pedidoDTO))));
-		} catch (PedidoNotFoundException ae) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ae.getMessage());
-		} catch (PedidoException ae) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ae.getMessage());
-		}
+		return ResponseEntity.ok(PedidoMapper.toDTO(this.pedidoService.update(id, PedidoMapper.toEntity(pedidoDTO))));
 	}
 
 	// Borrar un pedido
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable long id) {
-		try {
-			this.pedidoService.delete(id);
-			return ResponseEntity.ok().build();
-		} catch (PedidoNotFoundException ae) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ae.getMessage());
-		}
+		this.pedidoService.delete(id);
+		return ResponseEntity.ok().build();
 	}
 
 }
