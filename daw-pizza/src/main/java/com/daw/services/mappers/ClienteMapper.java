@@ -1,5 +1,7 @@
 package com.daw.services.mappers;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import com.daw.persistence.entities.ClienteEntity;
@@ -19,12 +21,12 @@ public class ClienteMapper {
 		dto.setEmail(clienteEntity.getEmail());
 		dto.setDireccion(clienteEntity.getDireccion());
 		dto.setTelefono(clienteEntity.getTelefono());
-		
+
 		return dto;
 	}
 	
 	public ClienteEntity toEntity(ClienteDTO dto) {
-		if(ClienteDTO == null) {
+		if(dto == null) {
 			return null;
 		}
 		
@@ -34,8 +36,20 @@ public class ClienteMapper {
 		clienteEntity.setEmail(dto.getEmail());
 		clienteEntity.setDireccion(dto.getDireccion());
 		clienteEntity.setTelefono(dto.getTelefono());
-		
+
 		return clienteEntity;
 	}
-
+	
+	public List<ClienteDTO> toDtos(List<ClienteEntity> entities) {
+		return entities.stream()
+				.map(c -> this.toDto(c))
+				.toList();
+	}
+	
+	public List<ClienteEntity> toEntities(List<ClienteDTO> dtos) {
+		return dtos.stream()
+				.map(c -> this.toEntity(c))
+				.toList();
+	}
+	
 }
