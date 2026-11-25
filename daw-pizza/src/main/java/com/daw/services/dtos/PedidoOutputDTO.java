@@ -11,22 +11,22 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PedidoResponseDTO {
-
+public class PedidoOutputDTO {
+	
 	private Long id;
 	private Long clienteId;
 	private String nombreCliente;
 	private String telefono;
+	private String direccion;
 	private LocalDateTime fecha;
 	private Double total;
 	private MetodoPedido metodo;
 	private String notas;
+	
+	private List<PizzaPedidoOutputDTO> pizzas;
 
-	private List<PizzaPedidoResponseDTO> pizzas;
-
-	public PedidoResponseDTO() {
+	public PedidoOutputDTO() {
 		super();
-		this.pizzas = new ArrayList<PizzaPedidoResponseDTO>();
+		this.pizzas = new ArrayList<PizzaPedidoOutputDTO>();
 	}
-
 }

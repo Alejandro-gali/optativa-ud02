@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class PizzaPedidoRequestDTO {
+public class PizzaPedidoInputDTO {
 
 	@NotNull(message = "El identificador de la pizza (pizzaId) es obligatorio")
 	private Long pizzaId;

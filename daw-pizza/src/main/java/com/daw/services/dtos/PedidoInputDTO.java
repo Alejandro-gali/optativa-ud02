@@ -11,12 +11,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class PedidoRequestDTO {
-
+public class PedidoInputDTO {
+	
 	@NotNull(message = "El identificador del cliente (clienteId) es obligatorio")
 	private Long clienteId;
+	
 	private MetodoPedido metodo;
 	
 	@Size(max = 200, message = "Las notas no pueden superar los 200 caracteres")
 	private String notas;
+
 }

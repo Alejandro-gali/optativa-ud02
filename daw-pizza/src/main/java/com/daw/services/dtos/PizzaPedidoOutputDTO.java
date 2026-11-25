@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class PizzaPedidoResponseDTO {
+public class PizzaPedidoOutputDTO {
 
 	private Long id;
 	private Long pizzaId;
